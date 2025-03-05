@@ -1,0 +1,37 @@
+For MSI: For Trace file Trace_ls
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MSI_PROT
+./cache Traces_ls.in debug.txt
+
+For Trace file Trace_ps
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MSI_PROT
+./cache Traces_ps.in debug.txt
+
+For Trace file Trace_wc
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MSI_PROT
+./cache Traces_wc.in debug.txt
+
+
+For MESI: For Trace file Trace_ls
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MESI_PROT
+./cache Traces_ls.in debug.txt
+
+For Trace file Trace_ps
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MESI_PROT
+./cache Traces_ps.in debug.txt
+
+For Trace file Trace_wc
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MESI_PROT
+./cache Traces_wc.in debug.txt
+
+
+For MOESI: For Trace file Trace_ls
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MOESI_PROT
+./cache Traces_ls.in debug.txt
+
+For Trace file Trace_ps
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MOESI_PROT
+./cache Traces_ps.in debug.txt
+
+For Trace file Trace_wc
+gcc -o cache main.c HelperFunctions.c MOESI.c MESI.c MSI.c -D MOESI_PROT
+./cache Traces_wc.in debug.txt
