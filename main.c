@@ -25,11 +25,25 @@ char *output;
 
 int main(int argc, char * argv[])
 {
+	if (argc < 3) {
+		fprintf(stderr, "Usage: %s <input_trace> <output_file>\n", argv[0]);
+		return 1;
+	}
+
 	input = argv[1];
 	output = argv[2];
 
 	ifp = fopen(input, "r"); //Open Input File
+	if (ifp == NULL) {
+		fprintf(stderr, "Error: cannot open input file '%s'\n", input);
+		return 1;
+	}
 	outfp = fopen(output, "w");//Open output file in 'Write' mode
+	if (outfp == NULL) {
+		fprintf(stderr, "Error: cannot open output file '%s'\n", output);
+		fclose(ifp);
+		return 1;
+	}
 	
 	int k;
 	int i=0;

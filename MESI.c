@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "CacheFunctions.h"
 #include "MESI.h"
-struct cacheline SimCache[INDEX][WAY];
+extern struct cacheline SimCache[INDEX][WAY];
 
 void MESI (int event, int index, int way, unsigned int address, int *Snoop_Response, int *Bus_Operation, int* Get_Snoop, int* status)
 {

@@ -124,17 +124,17 @@ void Print_States (int index, int way, int event, int GetSnoop, int BusOp, int S
 void Clear_Cache()
 {
   
-  int index;
-  int way;
-  fprintf(outfp, "\n**********Clearing Cache**********\n");
-  for (index = 0; index <= INDEX; index++)
-  {
-    for (way = 0; way < WAY; way++)
+    int index;
+    int way;
+    fprintf(outfp, "\n**********Clearing Cache**********\n");
+    for (index = 0; index < INDEX; index++)
     {
-       SimCache[index][way].PROT = I;
-       SimCache[index][way].LRU = WAY -1;
+        for (way = 0; way < WAY; way++)
+        {
+             SimCache[index][way].PROT = I;
+             SimCache[index][way].LRU = WAY -1;
+        }
     }
-  }
 }
 
 
@@ -221,24 +221,24 @@ int Get_Snoop_Result (unsigned int address)
 
 
 
-void Update_LRU(int way, int index)
+void Update_LRU(int index, int way)
 {
      
-     if (SimCache[index][way].LRU == 0)
-        return;
-     else
-     {
-        int ourbits = SimCache[index][way].LRU;
-        int testway;
+      if (SimCache[index][way].LRU == 0)
+          return;
+      else
+      {
+          int ourbits = SimCache[index][way].LRU;
+          int testway;
 
-        for(testway = 0; testway <= WAY - 1; testway++)
-        {
-        	if(SimCache[index][testway].LRU < ourbits )
-        		SimCache[index][testway].LRU++;
+          for(testway = 0; testway <= WAY - 1; testway++)
+          {
+          	if(SimCache[index][testway].LRU < ourbits )
+          		SimCache[index][testway].LRU++;
+          }
         }
-      }
 
-        SimCache[index][way].LRU = 0;
+          SimCache[index][way].LRU = 0;
 }
 
 
