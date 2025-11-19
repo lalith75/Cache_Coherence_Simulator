@@ -1,0 +1,55 @@
+name: Cache Simulator CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        protocol: [MSI, MESI, MOESI]
+        trace_file: [Traces_ls.in, Traces_wc.in]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile ${{ matrix.protocol }}
+        run: |
+          gcc -o cache \
+              main.c HelperFunctions.c MSI.c MESI.c MOESI.c \
+              -D${{ matrix.protocol }}_PROT \
+              -Wall -Wextra -Werror -O2
+        # -Werror makes warnings = fail (good for CI)
+
+      - name: Find trace file
+        id: find_trace
+        run: |
+          if [ -f "${{ matrix.trace_file }}" ]; then
+            echo "path=${{ matrix.trace_file }}" >> $GITHUB_OUTPUT
+          elif [ -f "traces_ls/${{ matrix.trace_file }}" ]; then
+            echo "path=traces_ls/${{ matrix.trace_file }}" >> $GITHUB_OUTPUT
+          elif [ -f "traces_wc/${{ matrix.trace_file }}" ]; then
+            echo "path=traces_wc/${{ matrix.trace_file }}" >> $GITHUB_OUTPUT
+          else
+            echo "Trace file not found!"
+            exit 1
+          fi
+
+      - name: Run ${{ matrix.protocol }} → ${{ matrix.trace_file }}
+        run: |
+          ./cache ${{ steps.find_trace.outputs.path }} \
+            debug_${{ matrix.protocol }}_${{ matrix.trace_file }}.txt
+
+      - name: Upload debug output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.protocol }}-${{ matrix.trace_file }}-debug.txt
+          path: debug_*.txt
+
+      - name: Done
+        run: echo "✅ ${{ matrix.protocol }} + ${{ matrix.trace_file }} passed!"
