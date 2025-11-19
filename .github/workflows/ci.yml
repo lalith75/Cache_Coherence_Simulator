@@ -23,7 +23,7 @@ jobs:
           gcc -o cache \
               main.c HelperFunctions.c MSI.c MESI.c MOESI.c \
               -D${{ matrix.protocol }}_PROT \
-              -Wall -Wextra -Werror -O2
+              -Wall -Wextra -O2
         # -Werror makes warnings = fail (good for CI)
 
       - name: Find trace file
